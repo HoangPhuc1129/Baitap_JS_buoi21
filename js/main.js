@@ -25,10 +25,10 @@ function Users(
 }
 Users.prototype.calcsSalary = function () {
   if (this.position === "Giám Đốc") {
-    return this.salary * 3;
+    return (this.salary * 3).toLocaleString();
   } else if (this.position === "Trưởng phòng") {
-    return this.salary * 2;
-  } else return this.salary;
+    return (this.salary * 2).toLocaleString();
+  } else return this.salary.toLocaleString();
 };
 Users.prototype.arrangeUser = function () {
   // if (!this.workHours) {
@@ -278,20 +278,16 @@ function validateAccount() {
   //kiểm tra rỗng
   if (!account) {
     spanEl.innerHTML = " Tài khoản không được để trống ";
+    spanEl.style.display = "block";
     return false;
   }
   // kiếm tra lượng kí tự
-  if (account.length > 6) {
-    spanEl.innerHTML = "Tài khoản tối đa 4 - 6 ký số";
+  if (account.length > 6 || account.length < 4) {
+    spanEl.innerHTML = "Tài khoản từ 4 - 6 ký số";
+    spanEl.style.display = "block";
     return false;
   }
-  //Kiếm tra dịnh dạng số
-  let regex = /^[0-9]*$/;
-  if (!regex.test(account) || account.length > 6 || account.length < 4) {
-    spanEl.innerHTML = "Tài khoản phải từ 4 - 6 ký số";
 
-    return false;
-  }
   spanEl.innerHTML = "";
   return true;
 }
@@ -304,12 +300,14 @@ function validateName() {
   //kiểm tra rỗng
   if (!name) {
     spanEl.innerHTML = " Tên nhận viên không được để trống ";
+    spanEl.style.display = "block";
     return false;
   }
   // Tên nhân viên phải là chữ
   let regex = /^[a-zA-Z\-]+$/;
   if (!regex.test(name)) {
-    spanEl.innerHTML = " Tên nhận viên phải là chữ ";
+    spanEl.innerHTML = " Tên nhân viên phải là chữ ";
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
@@ -323,12 +321,14 @@ function validateEmail() {
   // kiểm tra rỗng
   if (!email) {
     spanEl.innerHTML = "Email không được để trống";
+    spanEl.style.display = "block";
     return false;
   }
   // kiếm tra định dạng email
   let regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
   if (!regex.test(email)) {
-    spanEl.innerHTML = "Email không đúng định dạng ";
+    spanEl.innerHTML = "Email chưa đúng định dạng ";
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
@@ -342,6 +342,7 @@ function validatePassword() {
   //kiểm tra rỗng
   if (!password) {
     spanEl.innerHTML = " Mật khẩu không được để trống ";
+    spanEl.style.display = "block";
     return false;
   }
   // kiểm tra định dạng mật khẩu
@@ -349,10 +350,12 @@ function validatePassword() {
   if (!regex.test(password)) {
     spanEl.innerHTML =
       "Mật khẩu từ 6-10 ký tự (chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt)";
+    spanEl.style.display = "block";
     return false;
   }
   if (password.length < 6 || password.length > 10) {
     spanEl.innerHTML = "Mật khẩu từ 6-10 ký tự ";
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
@@ -366,6 +369,7 @@ function validateDate() {
   //kiểm tra rỗng
   if (!date) {
     spanEl.innerHTML = "Ngày làm không để trống";
+    spanEl.style.display = "block";
     return false;
   }
   //định dạng date MM/DD/YYYY
@@ -373,6 +377,7 @@ function validateDate() {
     /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
   if (!regex.test(date)) {
     spanEl.innerHTML = "Định dạng ngày tháng chưa đúng";
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
@@ -386,15 +391,18 @@ function validateSalary() {
   //kiểm tra rỗng
   if (!salary) {
     spanEl.innerHTML = "Chưa nhập lương cơ bản";
+    spanEl.style.display = "block";
     return false;
   }
   let regex = /^[0-9]*$/;
   if (!regex.test(salary)) {
     spanEl.innerHTML = "Lương cơ bản phải là số";
+    spanEl.style.display = "block";
     return false;
   }
   if (salary < 1000000 || salary > 20000000) {
     spanEl.innerHTML = "Lương cơ bản 1.000.000 - 20.000.000";
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
@@ -407,8 +415,9 @@ function validatePosition() {
   let spanEl = getValue("#tbChucVu");
 
   //kiểm tra rỗng
-  if (!position || position === "") {
+  if (!position) {
     spanEl.innerHTML = "Chưa chọn chức vụ";
+    spanEl.style.display = "block";
     return false;
   }
 
@@ -424,16 +433,18 @@ function validateHours() {
   //kiểm tra rỗng
   if (!hours) {
     spanEl.innerHTML = "Chưa điền giờ làm";
+    spanEl.style.display = "block";
     return false;
   }
   let regex = /^[0-9]*$/;
   if (!regex.test(hours)) {
     spanEl.innerHTML = "Số giờ làm trong tháng từ 80 - 200 giờ";
+    spanEl.style.display = "block";
     return false;
   }
   if (hours < 80 || hours > 200) {
     spanEl.innerHTML = "Số giờ làm trong tháng từ 80 - 200 giờ";
-
+    spanEl.style.display = "block";
     return false;
   }
   spanEl.innerHTML = "";
